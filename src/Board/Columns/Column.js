@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { jsx, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { AddCard } from '../Cards/AddCard';
+import { Card } from '../Cards/Card';
 
 const CardHolder = styled.div`
     border: 1px solid black;
@@ -12,15 +12,17 @@ const TitleOfCardHolder = styled.h1`
     text-align: center;
 `;
 
-export const Column = () => {
-    const [cardList, setCardList] = useState([]);
+export const Column = ({ title, cardData}) => {
+    const [cardList, setCardList] = useState(cardData);
+    console.log(cardList);
+    const cards = cardList.map((el) => <Card key={el.id} description={el.description} color={el.color} column={el.column} />)
 
     return (
         <div>
-            <TitleOfCardHolder>Title</TitleOfCardHolder>
+            <TitleOfCardHolder>{title}</TitleOfCardHolder>
             <CardHolder>
-                <AddCard setCardList={setCardList} />
-                {cardList}
+                <AddCard cardList={cardList} setCardList={setCardList} />
+                {cards}
             </CardHolder>
         </div>
     );

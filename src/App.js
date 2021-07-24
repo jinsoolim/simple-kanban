@@ -1,12 +1,12 @@
 import { Header } from './Header/Header';
 import { Footer } from './Footer/Footer';
-import { Main } from './Board/Main';
+import { Board } from './Board/Board';
 
 export const App = () => {
   return (
     <div>
       <Header />
-      <Main />
+      <Board />
       <Footer />
     </div>
   );
