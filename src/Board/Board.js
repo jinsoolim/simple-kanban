@@ -1,11 +1,13 @@
-import React from 'react';
+import { useContext } from 'react';
 import styled from '@emotion/styled';
 import { Column } from './Columns/Column';
-import { columnData } from '../data/columnData';
+// import { columnData } from '../data/columnData';
+import { DataContext } from '../App';
+import { AddColumn } from './Columns/AddColumn';
 
 const ColumnList = styled.ul`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 10em;
     max-width: 100%;
@@ -13,11 +15,18 @@ const ColumnList = styled.ul`
 `;
 
 export const Board = () => {
+    const [columnData] = useContext(DataContext);
+    let columns = [];
+    if (columnData) {
+        columns = columnData.map((el, index) => <Column title={el.title} key={`${index}.${el.id}`} id={el.id} cardData={el.cardData} columnIndex={index}/>);
+    }
 
-    const columns = columnData.map((el, index) => <Column title={el.title} key={el.id} cardData={el.cardData} columnIndex={index}/>);
     return (
-        <ColumnList className="column-list">
-            {columns}
+        <ColumnList>
+            {
+                columns.length > 0 && columns
+            }
+            <AddColumn/>
         </ColumnList>
     );
 };

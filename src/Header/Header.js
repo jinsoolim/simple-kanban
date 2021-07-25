@@ -14,7 +14,7 @@ const Title = styled.h1`
 export const Header = () => {
     return (
         <NavBar >
-            <Title>To-Do Board</Title>
+            <Title>Simple Kanban Board</Title>
         </NavBar>
     );
 };
