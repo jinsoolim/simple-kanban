@@ -1,44 +1,35 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
-import { columnData } from '../../data/columnData';
-import { StyledButton } from './StyledButton';
+import { DataContext } from '../../App';
+import StyledButton from '../Cards/StyledButton';
+import ModalFormItem from './ModalFormItem';
 
 Modal.setAppElement('#root');
 
-const ModalFormItem = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    align-items: space-between;
-    margin: 1em;
-`;
-
 export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardList, columnIndex }) => {
+    const [state, setState] = useContext(DataContext);
     const [description, setDescription] = useState('');
     const [cardColor, setCardColor] = useState('#fff');
-
-    const findNextCardId = () => {
-        let nextCardId = 0;
-        for (let i = 0; i < columnData.length; i+=1) {
-            let findCards = columnData[i].cardData;
-            for (let j = 0; j < findCards.length; j+=1) {
-                if (findCards[j].id >= nextCardId ) nextCardId = findCards[j].id;
-            }
-        }
-        return nextCardId + 1;
-    };    
-
-    const validateAddCard = (cardDescription) => {
-        if (cardDescription !== '') return true;
-        else return false;
-    };
-
+    
     const addCardInfoToCardList = () => {
-        if (validateAddCard(description)) {          
+        if (description !== '') {          
+            const findNextCardId = () => {
+                let nextCardId = 0;
+                const cards = state[columnIndex].cardData;
+                if (cards.length === 0) return 1;
+                for (let i = 0; i < state[columnIndex].cardData.length; i+=1) {
+                    if (cards[i].id >= nextCardId) nextCardId = cards[i].id;
+                }
+                return nextCardId + 1;
+            };    
+
+            const newState = [...state];
+            const newColumnInfo = newState[columnIndex];
             const newCardList = [...cardList];
+    
             newCardList.push({
                 id: findNextCardId(),
                 type: 'card',
@@ -46,7 +37,10 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                 description,
                 color: cardColor,
             });
+            newColumnInfo.cardData = newCardList;
             setCardList(newCardList);
+            setState(newState);
+            setDescription('');
             closeModal();
         } else {
             return;
@@ -75,13 +69,12 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                 justify-content: center;
                 align-items: center;
                 box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
-                transition: all ease 1s;
             `}
             >
             <form action="">
                 <ModalFormItem>
                     <label>Description: </label>
-                    <textarea name="description" maxlength="100" placeholder="Max 100 Characters" value={description} onChange={handleDescriptionChange} required />
+                    <textarea name="description" maxLength="100" placeholder="Max 100 Characters" value={description} onChange={handleDescriptionChange} required />
                 </ModalFormItem>
                 <ModalFormItem>
                     <label >Color: </label>
@@ -107,5 +100,5 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                 </ModalFormItem>
             </form>
         </Modal>
-    )
+    );
 };

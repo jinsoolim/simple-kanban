@@ -1,34 +1,43 @@
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from '@emotion/styled';
 import { AddCard } from '../Cards/AddCard';
 import { Card } from '../Cards/Card';
-
-const CardHolder = styled.ul`
-    border: 1px solid black;
-    margin: 1em;
-    list-style-type: none;
-    padding: 0;
-    background-color: #abdee4;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
-    max-height: 40em;
-    overflow: scroll;
-`;
+import ColumnElement from './ColumnElement';
+import StyledButton from '../Cards/StyledButton';
+import { DataContext } from '../../App';
 
 const ColumnTitle = styled.h1`
     text-align: center;
 `;
 
-export const Column = ({ title, cardData, columnIndex }) => {
+const ColumnHeaderDiv = styled.div`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+`;
+
+export const Column = ({ id, title, cardData, columnIndex }) => {
+    const [state, setState] = useContext(DataContext);
     const [cardList, setCardList] = useState(cardData);
+
+    const handleDeleteColumn = () => {
+        const newState = [...state];
+        const newColumnList = newState.filter((el) => el.id !== id);
+        setState(newColumnList);
+    }
+    
     const cards = cardList.map((el) => <Card key={`${el.column}.${el.id}`} id={el.id} description={el.description} color={el.color} column={el.column} cardList={cardList} setCardList={setCardList} />)
 
     return (
         <div>
-            <ColumnTitle>{title}</ColumnTitle>
-            <CardHolder>
+            <ColumnHeaderDiv>
+                <ColumnTitle>{title}</ColumnTitle>
+                <StyledButton onClick={handleDeleteColumn}>X</StyledButton>
+            </ColumnHeaderDiv>
+            <ColumnElement>
                 <AddCard cardList={cardList} setCardList={setCardList} columnIndex={columnIndex}/>
                 {cards}
-            </CardHolder>
+            </ColumnElement>
         </div>
     );
 };

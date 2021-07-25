@@ -1,15 +1,21 @@
 /** @jsxImportSource @emotion/react */
 
-import React from 'react';
+import { useContext } from 'react';
 import { css } from '@emotion/react';
 import CardBoxElement from './CardBoxElement';
-import { StyledButton } from './StyledButton';
+import StyledButton from './StyledButton';
+import { DataContext } from '../../App';
 
 export const Card = ({ id, description, color, column, cardList, setCardList }) => {
+    const [state, setState] = useContext(DataContext);
     const handleDeleteCard = () => {
+        const newState = [...state];
+        const newColumnInfo = newState[column];
         const cardListCopy = [...cardList];
         const newCardList = cardListCopy.filter((el) => el.id !== id);
+        newColumnInfo.cardData = newCardList;
         setCardList(newCardList);
+        setState(newState);
     }
     return (
         <div>

@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { css } from '@emotion/react';
 import CardBoxElement from './CardBoxElement';
-import { AddCardModal } from './AddCardModal';
-import { StyledButton } from './StyledButton';
+import { AddCardModal } from '../Modals/AddCardModal';
+import StyledButton from './StyledButton';
 
 export const AddCard = ({ cardList, setCardList, columnIndex }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,11 +17,9 @@ export const AddCard = ({ cardList, setCardList, columnIndex }) => {
             css={css`
                 position: sticky;
                 top: 0;
-                background-color: #abdee4;
-
             `}
         >
-            <CardBoxElement id="add-card">
+            <CardBoxElement color={"#dbdbf3"} id="add-card">
                 <h1>Add Card</h1>
                 <StyledButton color={"#a7f4a6"} onClick={openModal}>+</StyledButton>
             </CardBoxElement>
