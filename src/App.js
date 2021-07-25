@@ -1,9 +1,10 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { css } from '@emotion/react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Header } from './Header/Header';
 import { Footer } from './Footer/Footer';
 import { Board } from './Board/Board';
-
 
 export const DataContext = createContext([]);
 
@@ -52,16 +53,12 @@ export const App = () => {
   }, [state]);
 
   return (
-    <DataContext.Provider value={[state, setState]}>
-      <div
-        css={css`
-          overflow: scroll;
-        `}
-      >
-        <Header />
-        <Board />
-        <Footer />
-      </div>
-    </DataContext.Provider>
+    <DndProvider backend={HTML5Backend}>
+      <DataContext.Provider value={[state, setState]}>
+          <Header />
+          <Board />
+          <Footer />
+      </DataContext.Provider>
+    </DndProvider>
   );
 };

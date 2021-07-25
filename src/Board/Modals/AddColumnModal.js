@@ -64,14 +64,13 @@ export const AddColumnModal = ({ isOpen, setIsOpen, closeModal }) => {
                 box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
             `}
             >
-            <form action="" onSubmit={addColumnInfoToState}>
+            <form>
                 <ModalFormItem>
                     <label>Title: </label>
                     <input name="title" maxLength="25" placeholder="Max 25 Characters" value={title} onChange={handleTitleChange} required />
                 </ModalFormItem>
                 <ModalFormItem>
                     <StyledButton 
-                        type="submit"
                         onClick={addColumnInfoToState}
                         color={"#a7f4a6"}
                     >

@@ -18,10 +18,11 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
         if (description !== '') {          
             const findNextCardId = () => {
                 let nextCardId = 0;
-                const cards = state[columnIndex].cardData;
-                if (cards.length === 0) return 1;
-                for (let i = 0; i < state[columnIndex].cardData.length; i+=1) {
-                    if (cards[i].id >= nextCardId) nextCardId = cards[i].id;
+                for (let i = 0; i < state.length; i+=1) {
+                    const cards = state[i].cardData;
+                    for (let j = 0; j < cards.length; j+=1) {
+                        if (cards[j].id >= nextCardId) nextCardId = cards[j].id;
+                    }
                 }
                 return nextCardId + 1;
             };    
@@ -71,7 +72,7 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                 box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
             `}
             >
-            <form action="">
+            <form>
                 <ModalFormItem>
                     <label>Description: </label>
                     <textarea name="description" maxLength="100" placeholder="Max 100 Characters" value={description} onChange={handleDescriptionChange} required />
