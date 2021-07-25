@@ -1,12 +1,26 @@
-import React from 'react';
-import styled from '@emotion/styled';
-import CardBox from './CardBox';
+/** @jsxImportSource @emotion/react */
 
-export const Card = ({ description, color, column }) => {
+import React from 'react';
+import { css } from '@emotion/react';
+import CardBoxElement from './CardBoxElement';
+import { StyledButton } from './StyledButton';
+
+export const Card = ({ id, description, color, column, cardList, setCardList }) => {
+    const handleDeleteCard = () => {
+        const cardListCopy = [...cardList];
+        const newCardList = cardListCopy.filter((el) => el.id !== id);
+        setCardList(newCardList);
+    }
     return (
-        <CardBox styles={{ color }} className="card-box"> 
-            <h1>{description}</h1>
-            <h1>{column}</h1>
-        </CardBox>
+        <div>
+            <CardBoxElement 
+                css={css`
+                    background-color: ${color};
+                `} 
+            > 
+                <h1>{description}</h1>
+            <StyledButton color={"#f4b9a6"} onClick={handleDeleteCard}>-</StyledButton>
+            </CardBoxElement>
+        </div>
     );
 };
