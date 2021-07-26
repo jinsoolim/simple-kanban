@@ -2,13 +2,13 @@
 
 import { useContext } from 'react';
 import { css } from '@emotion/react';
-import CardBoxElement from './CardBoxElement';
-import StyledButton from './StyledButton';
+import CardBoxElement from '../StyledElements/CardBoxElement';
+import StyledButton from '../StyledElements/StyledButton';
 import { DataContext } from '../../App';
 import { ItemTypes } from '../../ItemTypes';
 import { useDrag } from 'react-dnd';
 
-export const Card = ({ id, description, color, column, cardList, setCardList }) => {
+export const Card = ({ id, index, description, color, column, cardList, setCardList }) => {
     const [state, setState] = useContext(DataContext);
     const handleDeleteCard = () => {
         const newState = [...state];
@@ -20,9 +20,9 @@ export const Card = ({ id, description, color, column, cardList, setCardList }) 
         setState(newState);
     }
 
-    const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    const [, drag] = useDrag(() => ({
         type: ItemTypes.CARD,
-        item: { id, column, cardList, setCardList },
+        item: { id, index, column, cardList, setCardList },
         collect: (monitor) => ({
             isDragging: monitor.isDragging()
         })
@@ -33,11 +33,47 @@ export const Card = ({ id, description, color, column, cardList, setCardList }) 
             <CardBoxElement 
                 css={css`
                     background-color: ${color};
+                    padding-bottom: 0;
                 `}
                 ref={drag}
             > 
-                <h1>{description}</h1>
-            <StyledButton color={"#f4b9a6"} onClick={handleDeleteCard}>-</StyledButton>
+                <div
+                    css={css`
+                        overflow: scroll;
+                        overflow-wrap: break-word;
+                        max-height: 6em;
+                        line-height: 1.5;
+                    `}
+                >
+                    <p
+                        css={css`
+                            text-align: left;
+                            font-size: 13px;
+                            margin: 0;
+                            color: #292929;
+                        `}
+                    >{description}</p>
+                </div>
+                <StyledButton 
+                    color={"rgba(255, 255, 255, 0)"} 
+                    onClick={handleDeleteCard}
+                    css={css`
+                        border-top: 1px solid darkgrey;
+                        margin: auto;
+                        padding: 0;
+                        
+                        width: 100%;
+                        box-shadow: none;
+                        color: darkgrey;
+                        &:hover {
+                            color: black;
+                            box-shadow: none;
+                            border: 1px solid grey;
+                            font-weight: 600;
+                            font-style: normal;
+                        }
+                    `}
+                >x</StyledButton>
             </CardBoxElement>
         </div>
     );

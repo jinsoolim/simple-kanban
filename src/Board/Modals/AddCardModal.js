@@ -4,8 +4,8 @@ import { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
 import { DataContext } from '../../App';
-import StyledButton from '../Cards/StyledButton';
-import ModalFormItem from './ModalFormItem';
+import StyledButton from '../StyledElements/StyledButton';
+import ModalFormItem from '../StyledElements/ModalFormItem';
 
 Modal.setAppElement('#root');
 
@@ -57,7 +57,7 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
             onRequestClose={() => setIsOpen(false)} 
             shouldCloseOnOverlayClick={true}
             css={css`
-                width: 300px;
+                width: 500px;
                 height: 300px;
                 position: fixed;
                 left: 50%;
@@ -65,7 +65,7 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                 margin-left: -150px;
                 margin-top: -150px;
                 background-color: white;
-                border-radius: 5px;
+                border-radius: 2px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -74,31 +74,79 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
             >
             <form>
                 <ModalFormItem>
-                    <label>Description: </label>
-                    <textarea name="description" maxLength="100" placeholder="Max 100 Characters" value={description} onChange={handleDescriptionChange} required />
+                    <label>New Task: </label>
+                    <textarea 
+                        cols="50"
+                        rows="2"
+                        name="description" 
+                        maxLength="100" 
+                        placeholder="Add Description..." 
+                        value={description} 
+                        onChange={handleDescriptionChange}
+                        css={css`
+                            height: 3.5em;
+                            width: 100%;
+                            margin: 1em 0 .3em;
+                            font-family: Arial;
+                            font-size: 12px;
+                        `}
+                        required />
+                    <span
+                        css={css`
+                            font-size: 12px;
+                            text-align: right;
+                            color: gray;
+                        `}
+                    >Max Characters: 100</span>
                 </ModalFormItem>
                 <ModalFormItem>
                     <label >Color: </label>
-                    <select name="color" value={cardColor} onChange={handleColorChange} >
-                        <option value={"#c1e1b9"}>Green</option>
-                        <option value={"#a6ccf4"}>Blue</option>
-                        <option value={"#f4b9a6"}>Red</option>
-                        <option value={"#f4f0a6"}>Yellow</option>
-                        <option value={"#fff"}>White</option>
-                    </select>
+                    <div 
+                        name="color" 
+                        onChange={handleColorChange} 
+                        css={css`
+                            display: flex;
+                            flex-direction: column;                            
+                        `}
+                    >
+                        <label>
+                            <input name="color" type="radio" value={"rgba(193, 225, 185, 0.8)"} onChange={handleColorChange}/>
+                            Green
+                        </label>
+                        <label>
+                            <input name="color" type="radio" value={"rgba(166, 204, 244, 0.8)"} onChange={handleColorChange}/>
+                            Blue
+                        </label>
+                        <label>
+                            <input name="color" type="radio" value={"rgba(244, 185, 166, 0.8)"} onChange={handleColorChange}/>
+                            Red
+                        </label>
+                        <label>
+                            <input name="color" type="radio" value={"rgba(244, 240, 166, 0.8)"} onChange={handleColorChange}/>
+                            Yellow
+                        </label>
+                        <label>
+                            <input name="color" type="radio" value={"rgba(255, 255, 255, 0.8)"} onChange={handleColorChange}/>
+                            White
+                        </label>
+                    </div>
                 </ModalFormItem>
-                <ModalFormItem>
+                <div>
+
                     <StyledButton 
                         onClick={addCardInfoToCardList}
-                        color={"#a7f4a6"}
-                    >
-                    Add Card</StyledButton>
+                        color={"#3278e8"}
+                        css={css`
+                        color: white;
+                        `}
+                        >
+                    Create</StyledButton>
                     <StyledButton 
                         onClick={closeModal}
-                        color={"#f4b9a6"}
-                    >
+                        color={"#e0e0e0"}
+                        >
                     Cancel</StyledButton>
-                </ModalFormItem>
+                </div>
             </form>
         </Modal>
     );

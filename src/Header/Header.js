@@ -5,10 +5,13 @@ const NavBar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(25, 50, 75, .9);
 `;
 const Title = styled.h1`
-    color: green;
+    font-weight: 350;
+    color: white;
+    text-shadow: 2px 2px rgba(0, 0, 0, 1);
+    letter-spacing: 1.5px;
+    margin-top: 1.5em;
 `;
 
 export const Header = () => {

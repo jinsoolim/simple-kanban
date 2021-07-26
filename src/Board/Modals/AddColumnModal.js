@@ -4,8 +4,8 @@ import { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
 import { DataContext } from '../../App';
-import StyledButton from '../Cards/StyledButton';
-import ModalFormItem from './ModalFormItem';
+import StyledButton from '../StyledElements/StyledButton';
+import ModalFormItem from '../StyledElements/ModalFormItem';
 
 Modal.setAppElement('#root');
 
@@ -57,7 +57,7 @@ export const AddColumnModal = ({ isOpen, setIsOpen, closeModal }) => {
                 margin-left: -150px;
                 margin-top: -150px;
                 background-color: white;
-                border-radius: 5px;
+                border-radius: 2px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -65,22 +65,44 @@ export const AddColumnModal = ({ isOpen, setIsOpen, closeModal }) => {
             `}
             >
             <form>
-                <ModalFormItem>
+                <ModalFormItem
+                >
                     <label>Title: </label>
-                    <input name="title" maxLength="25" placeholder="Max 25 Characters" value={title} onChange={handleTitleChange} required />
+                    <input 
+                        name="title" 
+                        maxLength="25" 
+                        placeholder="Add a new title..." 
+                        value={title} 
+                        onChange={handleTitleChange} 
+                        css={css`
+                            height: 2.5em;
+                            width: 100%;
+                            margin: 1em 0 .3em;
+                        `}
+                        required />
+                    <span
+                        css={css`
+                            font-size: 12px;
+                            text-align: right;
+                            color: gray;
+                        `}
+                    >Max Characters: 25</span>
                 </ModalFormItem>
-                <ModalFormItem>
+                <div>
                     <StyledButton 
                         onClick={addColumnInfoToState}
-                        color={"#a7f4a6"}
+                        color={"#3278e8"}
+                        css={css`
+                            color: white;
+                        `}
                     >
-                    Add Card</StyledButton>
+                    Create</StyledButton>
                     <StyledButton 
                         onClick={closeModal}
-                        color={"#f4b9a6"}
+                        color={"#e0e0e0"}
                     >
                     Cancel</StyledButton>
-                </ModalFormItem>
+                </div>
             </form>
         </Modal>
     );

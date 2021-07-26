@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
 import { AddColumnModal } from '../Modals/AddColumnModal';
-import ColumnElement from './ColumnElement';
+import ColumnElement from '../StyledElements/ColumnElement';
+import { ColumnTitle } from './Column';
+
 
 export const AddColumn = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,15 +17,17 @@ export const AddColumn = () => {
         <div>
             <ColumnElement
                 css={css`
-                border: 1px dotted black;
-                &:hover,&:focus {
-                    box-shadow: inset 0px 0px 6px rgba(0, 0, 0, .5);
-                    cursor: pointer;
-                }
+                    background-color: rgba(255, 255, 255, 0.8);
+                    height: 5em;
+                    display: flex;
+                    align-items: center;
+                    &:hover,&:focus {
+                        cursor: pointer;
+                    }
                 `}
                 onClick={openModal}
-                > 
-            <h1>+ Add Column</h1>
+            > 
+            <ColumnTitle>Add New List...</ColumnTitle>
             </ColumnElement>
             <AddColumnModal isOpen={isOpen} setIsOpen={setIsOpen} closeModal={closeModal} />
         </div>
