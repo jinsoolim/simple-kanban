@@ -32,11 +32,11 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
             const newCardList = [...cardList];
     
             newCardList.push({
-                id: findNextCardId(),
-                type: 'card',
-                column: columnIndex,
-                description,
-                color: cardColor,
+                "id": findNextCardId(),
+                "type": 'card',
+                "column": columnIndex,
+                "description": description,
+                "color": cardColor,
             });
             newColumnInfo.cardData = newCardList;
             setCardList(newCardList);

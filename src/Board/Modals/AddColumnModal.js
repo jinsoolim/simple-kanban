@@ -25,15 +25,15 @@ export const AddColumnModal = ({ isOpen, setIsOpen, closeModal }) => {
                     if (state[i].id >= nextColumnId) nextColumnId = state[i].id;
                 }
                 return nextColumnId + 1;
-            }
-
-            const newState = [...state];
+            };
+            
             const columnInfo = {
-                id: findNextColumnId(),
-                title,
-                type: "column",
-                cardData: [],
-            }
+                "id": findNextColumnId(),
+                "title": title,
+                "type": "column",
+                "cardData": [],
+            };
+            const newState = [...state];
             newState.push(columnInfo);
             setState(newState);
             setTitle('');

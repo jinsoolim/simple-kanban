@@ -25,7 +25,7 @@ export const Card = ({ id, index, description, color, column, cardList, setCardL
         type: ItemTypes.CARD,
         item: { id, index, column, cardList, setCardList },
         collect: (monitor) => ({
-            isDragging: monitor.isDragging()
+            isDragging: !!monitor.isDragging()
         })
     })); 
 

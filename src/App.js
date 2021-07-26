@@ -45,12 +45,9 @@ export const App = () => {
   const initialState = useContext(DataContext);
   const initialSearch = useContext(SearchContext);
   const [searchInput, setSearchInput] = useState(initialSearch);
-  const [state, setState] = useState(() => {
-    const applicationData = JSON.parse(localStorage.getItem('applicationData'));
-    
-    if (applicationData !== null) return applicationData;
-    else return initialState;
-  });
+
+  const applicationData = JSON.parse(localStorage.getItem('applicationData'));
+  const [state, setState] = useState(applicationData !== null ? applicationData : initialState);
 
   useEffect(() => {
     localStorage.setItem('applicationData', JSON.stringify(state));
@@ -59,12 +56,12 @@ export const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <DataContext.Provider value={[state, setState]}>
-        <SearchContext.Provider value={[searchInput, setSearchInput]}>
+      <SearchContext.Provider value={[searchInput, setSearchInput]}>
           <Header />
           <SearchBar/>
           <Board />
           <Footer />
-        </SearchContext.Provider>
+      </SearchContext.Provider>
       </DataContext.Provider>
     </DndProvider>
   );
