@@ -4,24 +4,25 @@ import { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
 import { DataContext } from '../../App';
-import StyledButton from '../Cards/StyledButton';
-import ModalFormItem from './ModalFormItem';
+import StyledButton from '../StyledElements/StyledButton';
+import ModalFormItem from '../StyledElements/ModalFormItem';
 
 Modal.setAppElement('#root');
 
 export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardList, columnIndex }) => {
     const [state, setState] = useContext(DataContext);
     const [description, setDescription] = useState('');
-    const [cardColor, setCardColor] = useState('#fff');
+    const [cardColor, setCardColor] = useState('rgba(255, 255, 255, 0.8)');
     
     const addCardInfoToCardList = () => {
         if (description !== '') {          
             const findNextCardId = () => {
                 let nextCardId = 0;
-                const cards = state[columnIndex].cardData;
-                if (cards.length === 0) return 1;
-                for (let i = 0; i < state[columnIndex].cardData.length; i+=1) {
-                    if (cards[i].id >= nextCardId) nextCardId = cards[i].id;
+                for (let i = 0; i < state.length; i+=1) {
+                    const cards = state[i].cardData;
+                    for (let j = 0; j < cards.length; j+=1) {
+                        if (cards[j].id >= nextCardId) nextCardId = cards[j].id;
+                    }
                 }
                 return nextCardId + 1;
             };    
@@ -56,7 +57,7 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
             onRequestClose={() => setIsOpen(false)} 
             shouldCloseOnOverlayClick={true}
             css={css`
-                width: 300px;
+                width: 500px;
                 height: 300px;
                 position: fixed;
                 left: 50%;
@@ -64,40 +65,75 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                 margin-left: -150px;
                 margin-top: -150px;
                 background-color: white;
-                border-radius: 5px;
+                border-radius: 2px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
             `}
             >
-            <form action="">
+            <form>
                 <ModalFormItem>
-                    <label>Description: </label>
-                    <textarea name="description" maxLength="100" placeholder="Max 100 Characters" value={description} onChange={handleDescriptionChange} required />
+                    <label>New Task: </label>
+                    <textarea 
+                        cols="50"
+                        rows="2"
+                        name="description" 
+                        maxLength="250" 
+                        placeholder="Add Description..." 
+                        value={description} 
+                        onChange={handleDescriptionChange}
+                        css={css`
+                            height: 3.5em;
+                            width: 100%;
+                            margin: 1em 0 .3em;
+                            font-family: Arial;
+                            font-size: 12px;
+                        `}
+                        required />
+                    <span
+                        css={css`
+                            font-size: 12px;
+                            text-align: right;
+                            color: gray;
+                        `}
+                    >Max Characters: 250</span>
                 </ModalFormItem>
                 <ModalFormItem>
                     <label >Color: </label>
-                    <select name="color" value={cardColor} onChange={handleColorChange} >
-                        <option value={"#c1e1b9"}>Green</option>
-                        <option value={"#a6ccf4"}>Blue</option>
-                        <option value={"#f4b9a6"}>Red</option>
-                        <option value={"#f4f0a6"}>Yellow</option>
-                        <option value={"#fff"}>White</option>
+                    <select 
+                        name="color" 
+                        onChange={handleColorChange} 
+                        css={css`
+                            width: 15em;
+                            margin: 1em 0 .3em;
+                            display: flex;
+                            flex-direction: column;                            
+                        `}
+                    >
+                            <option name="color" value={"rgba(255, 255, 255, 0.8)"} onChange={handleColorChange}>White (default)</option>
+                            <option name="color" value={"rgba(244, 240, 166, 0.8)"} onChange={handleColorChange}>Yellow</option>
+                            <option name="color" value={"rgba(193, 225, 185, 0.8)"} onChange={handleColorChange}>Green</option>
+                            <option name="color" value={"rgba(166, 204, 244, 0.8)"} onChange={handleColorChange}>Blue</option>
+                            <option name="color" value={"rgba(244, 185, 166, 0.8)"} onChange={handleColorChange}>Red</option>
                     </select>
                 </ModalFormItem>
-                <ModalFormItem>
+                <div>
+
                     <StyledButton 
                         onClick={addCardInfoToCardList}
-                        color={"#a7f4a6"}
-                    >
-                    Add Card</StyledButton>
+                        color={"#3278e8"}
+                        css={css`
+                        color: white;
+                        `}
+                        >
+                    Create</StyledButton>
                     <StyledButton 
-                        onClick={closeModal}
-                        color={"#f4b9a6"}
-                    >
+                        onClick={() => {closeModal(); setDescription(''); setCardColor('rgba(255, 255, 255, 0.8)')}}
+                        color={"#e0e0e0"}
+                        >
                     Cancel</StyledButton>
-                </ModalFormItem>
+                </div>
             </form>
         </Modal>
     );
