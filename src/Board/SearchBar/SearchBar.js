@@ -26,6 +26,12 @@ export const SearchBar = () => {
                     width: 17em;
                     text-align: center;
                     height: 2em;
+                    opacity: 80%;
+                    border-radius: 8px;
+                    &:hover, &:focus {
+                        opacity: 100;
+                        outline: 0;
+                    }
                 `}
             />
         </div>

@@ -79,7 +79,7 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                         cols="50"
                         rows="2"
                         name="description" 
-                        maxLength="100" 
+                        maxLength="250" 
                         placeholder="Add Description..." 
                         value={description} 
                         onChange={handleDescriptionChange}
@@ -97,39 +97,26 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                             text-align: right;
                             color: gray;
                         `}
-                    >Max Characters: 100</span>
+                    >Max Characters: 250</span>
                 </ModalFormItem>
                 <ModalFormItem>
                     <label >Color: </label>
-                    <div 
+                    <select 
                         name="color" 
                         onChange={handleColorChange} 
                         css={css`
+                            width: 15em;
+                            margin: 1em 0 .3em;
                             display: flex;
                             flex-direction: column;                            
                         `}
                     >
-                        <label>
-                            <input name="color" type="radio" value={"rgba(255, 255, 255, 0.8)"} onChange={handleColorChange}/>
-                            White
-                        </label>
-                        <label>
-                            <input name="color" type="radio" value={"rgba(244, 240, 166, 0.8)"} onChange={handleColorChange}/>
-                            Yellow
-                        </label>
-                        <label>
-                            <input name="color" type="radio" value={"rgba(193, 225, 185, 0.8)"} onChange={handleColorChange}/>
-                            Green
-                        </label>
-                        <label>
-                            <input name="color" type="radio" value={"rgba(166, 204, 244, 0.8)"} onChange={handleColorChange}/>
-                            Blue
-                        </label>
-                        <label>
-                            <input name="color" type="radio" value={"rgba(244, 185, 166, 0.8)"} onChange={handleColorChange}/>
-                            Red
-                        </label>
-                    </div>
+                            <option name="color" value={"rgba(255, 255, 255, 0.8)"} onChange={handleColorChange}>White (default)</option>
+                            <option name="color" value={"rgba(244, 240, 166, 0.8)"} onChange={handleColorChange}>Yellow</option>
+                            <option name="color" value={"rgba(193, 225, 185, 0.8)"} onChange={handleColorChange}>Green</option>
+                            <option name="color" value={"rgba(166, 204, 244, 0.8)"} onChange={handleColorChange}>Blue</option>
+                            <option name="color" value={"rgba(244, 185, 166, 0.8)"} onChange={handleColorChange}>Red</option>
+                    </select>
                 </ModalFormItem>
                 <div>
 

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export default styled.div`
     border: 0px solid black;
     text-align: center;
-    max-height: 10em;
+    max-height: 7em;
     width: 16.7em;
     border-radius: 1.5px;
     margin: 1em auto;

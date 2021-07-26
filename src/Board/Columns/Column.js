@@ -55,20 +55,21 @@ export const Column = ({ id, title, cardData, columnIndex }) => {
             const droppedItem = newState[item.column].cardData.filter((el) => el.id === item.id)[0];
             droppedItem.column = columnIndex;
 
-            //Check if item exists in the same column
             if (item.column === columnIndex) return;
-            //Add dropped item to the column that it was dropped on
-            const newCardList = [...cardList];
+
+            const oldColumnInfo = newState[item.column];
+            const cardListCopy = [...oldColumnInfo.cardData];
+            const oldCardList = cardListCopy.filter((el) => el.id !== item.id);
+            oldColumnInfo.cardData = oldCardList;
+            item.setCardList(oldCardList);
+            
+            const newColumnInfo = newState[columnIndex];
+            const newCardList = [...newColumnInfo.cardData];
             newCardList.push(droppedItem);
             newState[columnIndex].cardData = newCardList;
             setCardList(newCardList);
 
-            //Delete dropped item from previous column
-            item.handleDeleteCard();
-
-
-            
-            // setState(newState);
+            setState(newState);
             if (didDrop) {
                 return;
             }
@@ -108,18 +109,22 @@ export const Column = ({ id, title, cardData, columnIndex }) => {
                             margin-right: .8em;
                             opacity: 25%;
                             &:focus, &:hover {
+                                transition: .3s;
                                 opacity: 75%;
+                                cursor: pointer;
                             }
                             `}
                             >x</div>
                     </ColumnHeaderDiv>
-                    <p
+                    <div
                         css={css`
                             text-align: left;
-                            margin-left: 1.2em;
+                            color: grey;
+                            padding: 1em 1.2em;
                             font-size: 14px;
+                            background-color: #eeeeee;
                         `}
-                    ><em>Task Count: </em><b>{cardData.length}</b></p>
+                    ><em>Task Count: </em><b>{cardData.length}</b></div>
                     <AddCard cardList={cardList} setCardList={setCardList} columnIndex={columnIndex}/>
                 </div>
                 {

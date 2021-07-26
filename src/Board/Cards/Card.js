@@ -23,7 +23,7 @@ export const Card = ({ id, index, description, color, column, cardList, setCardL
 
     const [, drag] = useDrag(() => ({
         type: ItemTypes.CARD,
-        item: { id, index, column, cardList, setCardList, handleDeleteCard },
+        item: { id, index, column, cardList, setCardList },
         collect: (monitor) => ({
             isDragging: monitor.isDragging()
         })
@@ -42,7 +42,7 @@ export const Card = ({ id, index, description, color, column, cardList, setCardL
                     css={css`
                         overflow: scroll;
                         overflow-wrap: break-word;
-                        max-height: 6em;
+                        max-height: 3em;
                         line-height: 1.5;
                     `}
                 >
@@ -59,19 +59,19 @@ export const Card = ({ id, index, description, color, column, cardList, setCardL
                     color={"rgba(255, 255, 255, 0)"} 
                     onClick={handleDeleteCard}
                     css={css`
-                        border-top: 1px solid darkgrey;
-                        margin: auto;
-                        padding: 0;
-                        width: 100%;
+                    border-top: 1px solid darkgrey;
+                    margin: auto;
+                    width: 2em;
+                    padding: 0;
+                    box-shadow: none;
+                    color: darkgrey;
+                    &:hover {
+                        color: black;
                         box-shadow: none;
-                        color: darkgrey;
-                        &:hover {
-                            color: black;
-                            box-shadow: none;
-                            border: 1px solid grey;
-                            font-weight: 600;
-                            font-style: normal;
-                        }
+                        border: 1px solid grey;
+                        font-weight: 600;
+                        font-style: normal;
+                    }
                     `}
                 >x</StyledButton>
             </CardBoxElement>

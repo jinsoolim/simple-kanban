@@ -21,11 +21,11 @@ export const AddCard = ({ cardList, setCardList, columnIndex }) => {
                     margin: 0;
                     border-radius: 0px;
                     box-shadow: none;
-                    background-color: rgba(208, 208, 208, .5);
+                    background-color: rgba(208, 208, 208, .75);
                     &:hover,&:focus {
-                        box-shadow: none;
+                        transition: .3s;
                         cursor: pointer;
-                        background-color: rgba(208, 208, 208, 1);
+                        background-color: rgba(208, 208, 208, .93);
                     }
                 `,
                     cardList.length > 0 && 

@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 
 export default styled.button`
     width: 5.78em;
-    heigth: 2em;
     border-radius: 2px;
     padding: .7em;
     margin: .5em;
