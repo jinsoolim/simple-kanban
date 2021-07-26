@@ -12,5 +12,6 @@ export default styled.div`
     background-color: ${props => props.color};
     &:hover,&:focus {
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
     }
 `;

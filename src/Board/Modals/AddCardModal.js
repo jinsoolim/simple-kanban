@@ -12,7 +12,7 @@ Modal.setAppElement('#root');
 export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardList, columnIndex }) => {
     const [state, setState] = useContext(DataContext);
     const [description, setDescription] = useState('');
-    const [cardColor, setCardColor] = useState('#fff');
+    const [cardColor, setCardColor] = useState('rgba(255, 255, 255, 0.8)');
     
     const addCardInfoToCardList = () => {
         if (description !== '') {          
@@ -110,6 +110,14 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                         `}
                     >
                         <label>
+                            <input name="color" type="radio" value={"rgba(255, 255, 255, 0.8)"} onChange={handleColorChange}/>
+                            White
+                        </label>
+                        <label>
+                            <input name="color" type="radio" value={"rgba(244, 240, 166, 0.8)"} onChange={handleColorChange}/>
+                            Yellow
+                        </label>
+                        <label>
                             <input name="color" type="radio" value={"rgba(193, 225, 185, 0.8)"} onChange={handleColorChange}/>
                             Green
                         </label>
@@ -120,14 +128,6 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                         <label>
                             <input name="color" type="radio" value={"rgba(244, 185, 166, 0.8)"} onChange={handleColorChange}/>
                             Red
-                        </label>
-                        <label>
-                            <input name="color" type="radio" value={"rgba(244, 240, 166, 0.8)"} onChange={handleColorChange}/>
-                            Yellow
-                        </label>
-                        <label>
-                            <input name="color" type="radio" value={"rgba(255, 255, 255, 0.8)"} onChange={handleColorChange}/>
-                            White
                         </label>
                     </div>
                 </ModalFormItem>
@@ -142,7 +142,7 @@ export const AddCardModal = ({ isOpen, setIsOpen, closeModal, cardList, setCardL
                         >
                     Create</StyledButton>
                     <StyledButton 
-                        onClick={closeModal}
+                        onClick={() => {closeModal(); setDescription(''); setCardColor('rgba(255, 255, 255, 0.8)')}}
                         color={"#e0e0e0"}
                         >
                     Cancel</StyledButton>

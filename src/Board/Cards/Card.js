@@ -10,6 +10,7 @@ import { useDrag } from 'react-dnd';
 
 export const Card = ({ id, index, description, color, column, cardList, setCardList }) => {
     const [state, setState] = useContext(DataContext);
+
     const handleDeleteCard = () => {
         const newState = [...state];
         const newColumnInfo = newState[column];

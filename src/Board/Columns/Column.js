@@ -9,6 +9,8 @@ import ColumnElement from '../StyledElements/ColumnElement';
 import { DataContext } from '../../App';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../../ItemTypes';
+import { SearchContext } from '../../App';
+
 
 export const ColumnTitle = styled.h1`
     font-size: 16px;
@@ -16,7 +18,7 @@ export const ColumnTitle = styled.h1`
     margin-left: 1.2em;
 `;
 
-const ColumnHeaderDiv = styled.div`
+export const ColumnHeaderDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,6 +28,8 @@ const ColumnHeaderDiv = styled.div`
 
 export const Column = ({ id, title, cardData, columnIndex }) => {
     const [state, setState] = useContext(DataContext);
+    const [searchInput] = useContext(SearchContext);
+
     const [cardList, setCardList] = useState(cardData);
 
     const handleDeleteColumn = () => {
@@ -33,8 +37,14 @@ export const Column = ({ id, title, cardData, columnIndex }) => {
         const newColumnList = newState.filter((el) => el.id !== id);
         setState(newColumnList);
     }
-    
+
     const cards = cardList.map((el, index) => <Card key={`${el.column}.${el.id}`} id={el.id} index={index} description={el.description} color={el.color} column={el.column} cardList={cardList} setCardList={setCardList} />)
+
+    let filteredCards = [];
+    if (searchInput !== '') {
+        filteredCards = cards.filter((el) => el.props.description.toLowerCase().includes(searchInput.toLowerCase()));
+    }
+
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.CARD,
@@ -124,10 +134,14 @@ export const Column = ({ id, title, cardData, columnIndex }) => {
                             margin-left: 1.2em;
                             font-size: 14px;
                         `}
-                    ><em>No. of Tasks: </em><b>{cardData.length}</b></p>
+                    ><em>Task Count: </em><b>{cardData.length}</b></p>
                     <AddCard cardList={cardList} setCardList={setCardList} columnIndex={columnIndex}/>
                 </div>
-                {cards}
+                {
+                    searchInput === '' ? 
+                    cards :
+                    filteredCards
+                }
             </ColumnElement>
         </div>
     );
