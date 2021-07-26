@@ -23,7 +23,7 @@ export const Card = ({ id, index, description, color, column, cardList, setCardL
 
     const [, drag] = useDrag(() => ({
         type: ItemTypes.CARD,
-        item: { id, index, column, cardList, setCardList },
+        item: { id, index, column, cardList, setCardList, handleDeleteCard },
         collect: (monitor) => ({
             isDragging: monitor.isDragging()
         })
@@ -62,7 +62,6 @@ export const Card = ({ id, index, description, color, column, cardList, setCardL
                         border-top: 1px solid darkgrey;
                         margin: auto;
                         padding: 0;
-                        
                         width: 100%;
                         box-shadow: none;
                         color: darkgrey;

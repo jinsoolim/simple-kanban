@@ -7,7 +7,7 @@ import { SearchContext } from "../../App";
 export const SearchBar = () => {
     const [searchInput, setSearchInput] = useContext(SearchContext);
 
-    const handleSetSearchInput = (e) => setTimeout(setSearchInput(e.target.value), 3000); 
+    const handleSetSearchInput = (e) => setTimeout(setSearchInput(e.target.value), 350); 
 
     return (
         <div
