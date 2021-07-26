@@ -27,6 +27,7 @@ export const Footer = () => {
                     }
                 `} 
                 target="_blank"
+                rel="noreferrer"
                 href="https://github.com/jinsoolim/simple-kanban"
             >
                 <p>Simple Kanban Board by @jinsoolim</p>
