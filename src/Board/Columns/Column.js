@@ -40,42 +40,34 @@ export const Column = ({ id, title, cardData, columnIndex }) => {
 
     const cards = cardList.map((el, index) => <Card key={`${el.column}.${el.id}`} id={el.id} index={index} description={el.description} color={el.color} column={el.column} cardList={cardList} setCardList={setCardList} />)
 
-    let filteredCards = [];
-    if (searchInput !== '') {
-        filteredCards = cards.filter((el) => el.props.description.toLowerCase().includes(searchInput.toLowerCase()));
-    }
+    const filteredCards = cards.filter((el) => el.props.description.toLowerCase().includes(searchInput.toLowerCase()));
 
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.CARD,
         drop: (item, monitor) => {
             const didDrop = !!monitor.didDrop();
-
-            const newState = [...state];
-            const droppedItem = newState[item.column].cardData.filter((el) => el.id === item.id)[0];
-            droppedItem.column = columnIndex;
-
             if (item.column === columnIndex) return;
-
+            const newState = [...state];
             const oldColumnInfo = newState[item.column];
             const cardListCopy = [...oldColumnInfo.cardData];
+            const droppedItem = cardListCopy.filter((el) => el.id === item.id)[0];
+            droppedItem.column = columnIndex;
             const oldCardList = cardListCopy.filter((el) => el.id !== item.id);
             oldColumnInfo.cardData = oldCardList;
             item.setCardList(oldCardList);
-            
             const newColumnInfo = newState[columnIndex];
             const newCardList = [...newColumnInfo.cardData];
             newCardList.push(droppedItem);
-            newState[columnIndex].cardData = newCardList;
+            newColumnInfo.cardData = newCardList;
             setCardList(newCardList);
-
             setState(newState);
             if (didDrop) {
                 return;
             }
         },
         collect: (monitor) => ({
-            isOver: !!monitor.isOver(),
+            isOver: monitor.isOver(),
         })
     }));
 

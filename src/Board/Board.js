@@ -14,11 +14,8 @@ const ColumnList = styled.ul`
 `;
 
 export const Board = () => {
-    const [columnData] = useContext(DataContext);
-    let columns = [];
-    if (columnData) {
-        columns = columnData.map((el, index) => <Column title={el.title} key={`${index}.${el.id}`} id={el.id} cardData={el.cardData} columnIndex={index}/>);
-    }
+    const [state] = useContext(DataContext);
+    const columns = state.map((el, index) => <Column title={el.title} key={`${index}.${el.id}`} id={el.id} cardData={el.cardData} columnIndex={index}/>);
 
     return (
         <ColumnList>
