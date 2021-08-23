@@ -1,10 +1,11 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useCallback } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Header } from './Header/Header';
 import { Footer } from './Footer/Footer';
 import { Board } from './Board/Board';
 import { SearchBar } from './Board/SearchBar/SearchBar';
+import _ from 'lodash';
 
 export const SearchContext = createContext('');
 
@@ -46,8 +47,17 @@ export const App = () => {
   const initialSearch = useContext(SearchContext);
   const [searchInput, setSearchInput] = useState(initialSearch);
 
+  const [filterSearchInput, setFilterSearchInput] = useState('');
+
   const applicationData = JSON.parse(localStorage.getItem('applicationData'));
   const [state, setState] = useState(applicationData !== null ? applicationData : initialState);
+
+  const debounced = useCallback(_.debounce(setFilterSearchInput, 1000), [setFilterSearchInput]);
+
+  useEffect(() => {
+    debounced(searchInput);
+  }, [searchInput])
+
 
   useEffect(() => {
     localStorage.setItem('applicationData', JSON.stringify(state));
@@ -56,7 +66,7 @@ export const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <DataContext.Provider value={[state, setState]}>
-      <SearchContext.Provider value={[searchInput, setSearchInput]}>
+      <SearchContext.Provider value={[searchInput, setSearchInput, filterSearchInput]}>
           <Header />
           <SearchBar/>
           <Board />
